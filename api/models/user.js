@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 var db = require('../../config/database');
-const Member = require('./member')
+const Pacient = require('./pacient')
 
 const User = db.define('users', {
 	id: { 
@@ -19,6 +19,6 @@ const User = db.define('users', {
 
 });
 
-User.belongsTo(Member, { foreignKey: 'member_id' });
+User.belongsTo(Pacient, { foreignKey: 'pacient_id' });
 
 module.exports = User;

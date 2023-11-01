@@ -4,6 +4,7 @@ var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
 const User = require('../models/user');
+const Pacient = require('../models/pacient');
 const sessionFalse = require('../middlewares/session_false');
 const { indexCss, indexJs } = require('../helpers/login_helper');
 
@@ -33,10 +34,18 @@ router.post('/', async (req, res, next) => {
   var user = req.body.user;
   var password = req.body.password;
   var status = 200;
-  var message = 'Usuario y/o contraseña no coinciden';
+  var message = '';
   // logic
   try{
-    var exist = await User.count({
+
+    var user = await User.findOne({
+      attributes: ['id', 'user', 'pacient_id'],
+      include: [
+        {
+          model: Pacient,
+          attributes: ['names', 'last_names'],
+        },
+      ],
       where: {
         [Op.and]: [
           { user: user },
@@ -44,32 +53,22 @@ router.post('/', async (req, res, next) => {
         ]
       }
     });
-    if(exist == 1){
+    if(user != null){
       req.session.time = new Date().toLocaleTimeString();
       req.session.user = user;
       req.session.state = 'activate';
-      res.redirect('/');
-      res.end();
+      return res.redirect('/');
     }else{
+      message ='?error=user-pass-mismatch'
       status = 500;
     }
   }catch(error){
     status = 500;
-    message = 'Ocurrió un error en validad su usuario';
-    console.log(error);
+    message = '?error=user-pass-error';
+    console.error(error);
   }
   // response
-  var locals = {
-    constants: constants,
-    title: 'Bienvenido',
-    helpers: helpers,
-    csss: indexCss(),
-    jss: indexJs(),
-    message: message,
-    messageColor: 'text-danger',
-    contents: {},
-  };
-  res.status(status).render('login/index', locals);
+  res.redirect('/login' + message);
 });
 
 

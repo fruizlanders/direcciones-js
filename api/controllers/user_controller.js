@@ -111,4 +111,17 @@ router.post('/create', (req, res, next) => {
   });
 });
 
+router.get('/sign-out', (req, res, next) => {
+  req.session = null;
+  res.redirect('/login');
+});
+
+router.get('/session', (req, res, next) => {
+  if (req.session.state === undefined || req.session.state === null ){
+    res.send('No hay una sesión activa...<br> Ir al <a href="/">Inicio</a>').status(500);
+  }else{
+    res.send(JSON.stringify(req.session)).status(200);
+  }
+});
+
 module.exports = router;

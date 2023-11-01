@@ -34,6 +34,9 @@
     }else if(queryParams.error == 'user-pass-mismatch'){
       message = 'Usuario y/o contraseñas incorrectas';
       messageColor = 'text-danger';
+    }else if(queryParams.error == 'user-pass-error'){
+      message = 'Hubo un error al validar el acceso';
+      messageColor = 'text-danger';
     }else{
       message = '';
       messageColor = '';
