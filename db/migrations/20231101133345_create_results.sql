@@ -3,10 +3,12 @@
 CREATE TABLE results (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   description	TEXT,
-  pacient_id	INTEGER NOT NULL,
   created_at DATETIME,
   updated_at DATETIME,
-  FOREIGN KEY (pacient_id) REFERENCES pacients (id)
+  pacient_id	INTEGER NOT NULL,
+  doctor_id	INTEGER NOT NULL,
+  FOREIGN KEY (pacient_id) REFERENCES pacients (id),
+  FOREIGN KEY (doctor_id) REFERENCES doctors (id)
 );
 
 -- migrate:down

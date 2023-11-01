@@ -33,5 +33,15 @@ const indexJs = () => {
   return resp;
 }
 
+const isPacient = (user) => {
+  const number = parseInt(user, 10);
+  if (!isNaN(number) && Number.isInteger(number)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 exports.indexCss= indexCss;
 exports.indexJs= indexJs;
+exports.isPacient= isPacient;

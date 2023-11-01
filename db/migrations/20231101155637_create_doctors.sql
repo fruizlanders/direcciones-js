@@ -1,8 +1,8 @@
 -- migrate:up
 
-CREATE TABLE pacients (
+CREATE TABLE doctors (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  code	INTEGER,
+  cmp	INTEGER,
   dni	VARCHAR(8),
   names VARCHAR(30),
   last_names VARCHAR(45),
@@ -15,4 +15,4 @@ CREATE TABLE pacients (
 
 -- migrate:down
 
-DROP TABLE IF EXISTS pacients;
+DROP TABLE IF EXISTS doctors;

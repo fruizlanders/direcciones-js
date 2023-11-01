@@ -1,12 +1,14 @@
 var express = require('express');
 const { Op } = require("sequelize");
+var db = require('../../config/database');
 var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
 const User = require('../models/user');
 const Pacient = require('../models/pacient');
+const Doctor = require('../models/doctor');
 const sessionFalse = require('../middlewares/session_false');
-const { indexCss, indexJs } = require('../helpers/login_helper');
+const { indexCss, indexJs, isPacient } = require('../helpers/login_helper');
 
 // path = /login
 
@@ -35,40 +37,51 @@ router.post('/', async (req, res, next) => {
   var password = req.body.password;
   var status = 200;
   var message = '';
+  var userDB = null;
+  var redirectUrl = '/login';
   // logic
   try{
-
-    var user = await User.findOne({
-      attributes: ['id', 'user', 'pacient_id'],
-      include: [
-        {
-          model: Pacient,
-          attributes: ['names', 'last_names'],
-        },
-      ],
-      where: {
-        [Op.and]: [
-          { user: user },
-          { password: password },
-        ]
+    if(isPacient(user)){
+      const sqlQuery = `
+          SELECT U.id AS user_id, U.user, P.id AS pacient_id, P.names, P.last_names
+          FROM users U
+          INNER JOIN pacients P ON U.id = P.user_id
+          WHERE U.user = "${user}" AND U.password = "${password}";
+        `;
+      const rs = await db.query(sqlQuery, { type: db.QueryTypes.SELECT });
+      if (rs.length == 1){
+        req.session.user = rs[0];
+        req.session.state = 'activate';
+        req.session.type = 'pacient';
+        req.session.time = new Date().toLocaleTimeString();
+        redirectUrl = '/';
+      }else{
+        message ='?error=user-pass-mismatch'
       }
-    });
-    if(user != null){
-      req.session.time = new Date().toLocaleTimeString();
-      req.session.user = user;
-      req.session.state = 'activate';
-      return res.redirect('/');
     }else{
-      message ='?error=user-pass-mismatch'
-      status = 500;
+      const sqlQuery = `
+          SELECT U.id AS user_id, U.user, D.id AS doctor_id, D.names, D.last_names
+          FROM Users U
+          INNER JOIN doctors D ON U.id = D.user_id
+          WHERE U.user = "${user.toUpperCase()}" AND U.password = "${password}";
+        `;
+      const rs = await db.query(sqlQuery, { type: db.QueryTypes.SELECT });
+      if (rs.length == 1){
+        req.session.user = rs[0];
+        req.session.type = 'doctor';
+        req.session.state = 'activate';
+        req.session.time = new Date().toLocaleTimeString();
+        redirectUrl = '/';
+      }else{
+        message ='?error=user-pass-mismatch'
+      }
     }
   }catch(error){
     status = 500;
     message = '?error=user-pass-error';
-    console.error(error);
   }
   // response
-  res.redirect('/login' + message);
+  res.redirect(redirectUrl + message);
 });
 
 
@@ -105,8 +118,6 @@ router.post('/sign-in', async (req, res, next) => {
           activationKey: helpers.randomSN(40),
           resetKey: helpers.randomSN(40),
         });  
-        // send activation mail
-        
       }
     }catch(error){
       status = 500;

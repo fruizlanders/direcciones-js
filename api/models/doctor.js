@@ -2,13 +2,13 @@ const Sequelize = require('sequelize');
 var db = require('../../config/database');
 const User = require('./user')
 
-const Pacient =db.define('pacients', {
+const Doctor = db.define('doctors', {
 	id: { 
     type: Sequelize.INTEGER, 
     primaryKey: true, 
     autoIncrement: true ,
   },
-	code: { 
+	cmp: { 
     type: Sequelize.INTEGER, 
     allowNull: false,  
   },
@@ -46,4 +46,5 @@ const Pacient =db.define('pacients', {
   },
 });
 
-module.exports = Pacient;
+
+module.exports = Doctor;
