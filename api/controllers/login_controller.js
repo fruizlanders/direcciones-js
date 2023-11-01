@@ -54,7 +54,7 @@ router.post('/', async (req, res, next) => {
         req.session.state = 'activate';
         req.session.type = 'pacient';
         req.session.time = new Date().toLocaleTimeString();
-        redirectUrl = '/';
+        redirectUrl = '/paciente';
       }else{
         message ='?error=user-pass-mismatch'
       }
@@ -71,7 +71,7 @@ router.post('/', async (req, res, next) => {
         req.session.type = 'doctor';
         req.session.state = 'activate';
         req.session.time = new Date().toLocaleTimeString();
-        redirectUrl = '/';
+        redirectUrl = '/doctor';
       }else{
         message ='?error=user-pass-mismatch'
       }

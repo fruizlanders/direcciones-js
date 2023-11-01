@@ -20,15 +20,15 @@ h1 {
 }
 
 h2 { 
-  font-size: 24px !important;
-}
-
-p {
   font-size: 18px !important;
 }
 
+p {
+  font-size: 15px !important;
+}
+
 a {
-  font-size: 18px;
+  font-size: 15px;
   color: #343434 !important;
   text-decoration: none !important;
 }

@@ -2,7 +2,6 @@ var express = require('express');
 const { stringify } = require('query-string');
 var router = express.Router();
 const User = require('../models/user');
-const Member = require('../models/member');
 const { Op } = require('sequelize');
 
 /* GET users listing. */
@@ -54,7 +53,7 @@ router.post('/reset_password', (req, res, next) => {
     data: ''
   }
   var status = 404;
-  Member.findOne({
+  User.findOne({
     where: { 
       dni: dni,
       email: email
@@ -86,7 +85,7 @@ router.post('/create', (req, res, next) => {
     data: ''
   }
   var status = 404;
-  Member.findOne({
+  User.findOne({
     where: { 
       [Op.or]: [
         {dni: dni},
