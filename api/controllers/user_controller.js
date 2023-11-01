@@ -123,4 +123,37 @@ router.get('/session', (req, res, next) => {
   }
 });
 
+router.get('/menu', (req, res, next) => {
+  var userType = req.session.type;
+  var menu = {
+    'pacient': [
+      {name: 'Home Paciente', url: '/admin', active: true, items: []}, 
+      {name: 'Recursos', url: '#', active: true, items: [
+        {name: 'Trabajadores', url: '/worker', active: true}, 
+        {name: 'Puestos de Trabajo', url: '/position', active: true}, 
+        {name: 'Tipos de Servicios', url: '/service_type', active: true}, 
+        {name: 'Sedes - Lima', url: '/branch/lima', active: false}, 
+        {name: 'Sedes - Provincias', url: '/branch/province', active: false}, 
+      ]}, 
+      {name: 'Servicios', url: '/service', active: true, items: []}, 
+      {name: 'Incidencias', url: '/admin/service', active: true, items: []}, 
+      {name: 'S. Técnicos', url: '/admin/project', active: true, items: []}, 
+    ],
+    'doctor': [
+      {name: 'Home Doctor', url: '/admin', active: true, items: []}, 
+      {name: 'Recursos', url: '#', active: true, items: [
+        {name: 'Trabajadores', url: '/worker', active: true}, 
+        {name: 'Puestos de Trabajo', url: '/position', active: true}, 
+        {name: 'Tipos de Servicios', url: '/service_type', active: true}, 
+        {name: 'Sedes - Lima', url: '/branch/lima', active: false}, 
+        {name: 'Sedes - Provincias', url: '/branch/province', active: false}, 
+      ]}, 
+      {name: 'Servicios', url: '/service', active: true, items: []}, 
+      {name: 'Incidencias', url: '/admin/service', active: true, items: []}, 
+      {name: 'S. Técnicos', url: '/admin/project', active: true, items: []}, 
+    ] 
+  };
+  res.send(JSON.stringify(menu[userType]))
+});
+
 module.exports = router;

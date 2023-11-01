@@ -45,7 +45,7 @@
   // others
 	onMount(() => {
 		axios.get( // url, data, headers
-      '/access/user/menu', 
+      '/user/menu', 
       {
         params: {},
         headers:{
@@ -114,7 +114,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
 	<div class="container">
-		<a class="navbar-brand" href="/admin">Dr GYM</a>
+		<a class="navbar-brand" href="/admin">PyPde</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -180,7 +180,8 @@
 		{:else}
 			<ul class="navbar-nav ml-auto">
 				<li><a class="nav-link" href="/login">
-					<i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Ingresar</a>
+					<a class="btn btn-success my-2 my-sm-0" href="/user/session" style="margin-left:10px;">Ver Perfil</a>
+          <a class="btn btn-secondary my-2 my-sm-0" href="/user/sign-out" style="margin-left:10px;">Salir</a>
 				</li>
 			</ul>
 		{/if}         

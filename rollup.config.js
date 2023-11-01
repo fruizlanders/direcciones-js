@@ -72,6 +72,48 @@ const App = {
 	}
 };
 
+const Doctor = {
+	input: 'src/entries/doctor.js',
+	output: {
+		sourcemap: true,
+		format: 'iife',
+		name: 'doctor',
+		file: production ? 'public/build/doctor.min.js' : 'public/build/doctor.js'
+	},
+	plugins: [
+		svelte({
+			compilerOptions: {
+				dev: !production
+			}
+		}),
+		copy({
+			targets: [
+				{ 
+					src: 'node_modules/font-awesome/fonts/*', 
+					dest: 'public/fonts'
+				},
+				{ 
+					src: 'node_modules/bootstrap-icons/font/fonts/*', 
+					dest: 'public/build/fonts'
+				}
+			]
+		}),
+		css({ output: 'doctor.css' }),
+		resolve({
+			browser: true,
+			dedupe: ['svelte'],
+			exportConditions: ['svelte']
+		}),
+		commonjs(),
+		//!production && serve(),
+		!production && livereload('public'),
+		production && terser()
+	],
+	watch: {
+		clearScreen: false
+	}
+};
+
 const Login = {
 	input: 'src/entries/login.js',
 	output: {
@@ -162,7 +204,7 @@ const Error = {
 	}
 };
 
-export default [App, Login, Error, Admin];
+export default [App, Login, Error, Admin, Doctor];
 
 /*
 const App = {

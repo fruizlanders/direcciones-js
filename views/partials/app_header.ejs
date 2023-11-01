@@ -13,17 +13,17 @@
   <!-- Fin CSS-->
   <script type="text/javascript">
     var BASE_URL = '<%= constants.base_url %>';
-    var STATICS_URL  = '<%= constants.static_url %>';
+    var STATIC_URL  = '<%= constants.static_url %>';
     var CSRF = "<%=constants.csrf.secret%>";
     var CSRF_KEY = "<%=constants.csrf.key%>";
   </script>
 </head>
 <body>
-  <!-- Inicio modal -->
+  <!-- 
   <button type="button" class="btn btn-primary btn-lg d-none" data-toggle="modal" data-target="#modal-container" data-backdrop="static"  data-backdrop="static" id="btnModal">Launch demo modal</button>
   <div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   </div>
-  <!-- Fin modal -->
+  
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="/">App Demo</a>
@@ -54,7 +54,12 @@
             <a class="nav-link disabled" href="#">Disabled</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contenido a la derecha</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 ml-auto">
           <% if (constants.session == false){ %>
           <a class="btn btn-success my-2 my-sm-0" href="/login">Ingresar</a>
           <a class="btn btn-primary my-2 my-sm-0" href="/login/sign-in" style="margin-left:10px;">Registrarse</a>
@@ -62,8 +67,8 @@
           <a class="btn btn-success my-2 my-sm-0" href="/sign-out" style="margin-left:10px;">Salir</a>
           <% } else { %>
             <% if (session.state == 'activate'){ %>
-              <a class="btn btn-success my-2 my-sm-0" href="/profile" style="margin-left:10px;">Ver Perfil</a>
-              <a class="btn btn-secondary my-2 my-sm-0" href="/sign-out" style="margin-left:10px;">Salir</a>
+              <a class="btn btn-success my-2 my-sm-0" href="/user/session" style="margin-left:10px;">Ver Perfil</a>
+              <a class="btn btn-secondary my-2 my-sm-0" href="/user/sign-out" style="margin-left:10px;">Salir</a>
             <% } else { %>
               <a class="btn btn-success my-2 my-sm-0" href="/login">Ingresar</a>
               <a class="btn btn-primary my-2 my-sm-0" href="/login/sign-in" style="margin-left:10px;">Registrarse</a>
@@ -74,3 +79,4 @@
     </div>
   </nav>
   <div id="app">
+  -->
