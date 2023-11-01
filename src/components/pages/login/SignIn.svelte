@@ -5,6 +5,7 @@
   import queryString from 'query-string';
   export let location;
   // variables
+  const static_url = STATIC_URL;
   let message = '';
   let messageColor = '';
   let queryParams;
@@ -79,7 +80,7 @@
 
 <main class="form-signin w-100 m-auto text-center">
   <form action="/sign_in" method="post">
-    <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <img class="mb-4" src="{static_url}assets/img/logo-cuadrado.png" alt="" width="120" height="120">
     <h1 class="h3 mb-3 fw-normal">Nueva Cuenta</h1>
     <div class="form-floating">
       <input type="text" name="user" class="form-control" id="txtUser" placeholder="Usuario" disabled={disabled} required>

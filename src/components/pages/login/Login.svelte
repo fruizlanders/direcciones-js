@@ -47,7 +47,7 @@
 
 <main class="form-signin w-100 m-auto text-center">
   <form action="/login" method="post">
-    <img class="mb-4" src="{static_url}assets/img/logo-cuadrado.png" alt="" width="144" height="138">
+    <img class="mb-4" src="{static_url}assets/img/logo-cuadrado.png" alt="" width="120" height="120">
     <h1 class="h3 mb-3 fw-normal">Bienvenido</h1>
 
     <div class="form-floating">

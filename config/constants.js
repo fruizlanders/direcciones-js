@@ -13,6 +13,14 @@ module.exports = () => {
         secret: 'mpt/sr6eS2AlCRHU7DVThMgFTN08pnfSDf/C94eZx7udfm0lvgaYWLYJttYPKzGKDTlXwVU/d2FOxbKkgNlsTw==',
         key: 'csrf_val'
       },
+      enterprise_data: {
+        facebook: process.env.FACEBOOK,
+        instagram: process.env.INSTAGRAM,
+        whatsapp: process.env.WHASTAPP,
+        phone: process.env.PHONE,
+        email_site: process.env.EMAIL_SITE,
+        enterprise_name: process.env.ENTERPRISE_NAME,
+      }
     };
   }else if(process.env.ENV == 'heroku'){
     return {
@@ -25,6 +33,14 @@ module.exports = () => {
         secret: 'mpt/sr6eS2AlCRHU7DVThMgFTN08pnfSDf/C94eZx7udfm0lvgaYWLYJttYPKzGKDTlXwVU/d2FOxbKkgNlsTw==',
         key: 'csrf_val'
       },
+      enterprise_data: {
+        facebook: process.env.FACEBOOK,
+        instagram: process.env.INSTAGRAM,
+        whatsapp: process.env.WHASTAPP,
+        phone: process.env.PHONE,
+        email_site: process.env.EMAIL_SITE,
+        enterprise_name: process.env.ENTERPRISE_NAME,
+      }
     };
   }else{
 

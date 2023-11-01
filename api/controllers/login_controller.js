@@ -9,22 +9,24 @@ const { indexCss, indexJs } = require('../helpers/login_helper');
 
 // path = /login
 
-var index = (req, res, next) => {
-  // response
-  var locals = {
-    constants: constants,
-    title: 'Bienvenido',
-    helpers: helpers,
-    csss: indexCss(),
-    jss: indexJs(),
-    message: '',
-    messageColor: '',
-    contents: {},
-  };
-  res.render('login/index', locals);
-}
+const routes = ['/', '/sign_in', '/reset_password'];
 
-router.get('', sessionFalse, index);
+routes.forEach((route) => {
+  router.get(route, sessionFalse, (req, res, next) => {
+    // response
+    var locals = {
+      constants: constants,
+      title: 'Bienvenido',
+      helpers: helpers,
+      csss: indexCss(),
+      jss: indexJs(),
+      message: '',
+      messageColor: '',
+      contents: {},
+    };
+    res.render('login/index', locals);
+  });
+});
 
 router.post('/', async (req, res, next) => {
   // data
@@ -70,7 +72,6 @@ router.post('/', async (req, res, next) => {
   res.status(status).render('login/index', locals);
 });
 
-router.get('/sign-in', sessionFalse, index);
 
 router.post('/sign-in', async (req, res, next) => {
   // data
@@ -131,7 +132,5 @@ router.post('/sign-in', async (req, res, next) => {
   };
   res.status(status).render('login/index', locals);
 });
-
-router.get('/forgot-password', sessionFalse, index);
 
 module.exports = router; 

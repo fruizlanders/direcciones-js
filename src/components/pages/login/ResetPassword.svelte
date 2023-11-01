@@ -7,6 +7,7 @@
   let message = '';
   let messageColor = '';
   let queryParams;
+  const static_url = STATIC_URL;
   // functions
   $: queryParams = queryString.parse(window.location.search);
   onMount(() => {
@@ -41,7 +42,7 @@
 
 <main class="form-signin w-100 m-auto text-center">
   <form action="/reset_password" method="post">
-    <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <img class="mb-4" src="{static_url}assets/img/logo-cuadrado.png" alt="" width="120" height="120">
     <h1 class="h3 mb-3 fw-normal">Restablecer Contraseña</h1>
     <div class="form-floating">
       <input type="email" name="email" class="form-control" id="txtEmail" placeholder="demo">
