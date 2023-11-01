@@ -54,7 +54,7 @@ router.post('/', async (req, res, next) => {
         req.session.state = 'activate';
         req.session.type = 'pacient';
         req.session.time = new Date().toLocaleTimeString();
-        redirectUrl = '/paciente';
+        redirectUrl = '/pacient';
       }else{
         message ='?error=user-pass-mismatch'
       }

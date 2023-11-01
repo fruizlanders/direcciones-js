@@ -3,9 +3,10 @@ var router = express.Router();
 var constants = require('../../config/constants')();
 var helpers = require('../../config/helpers');
 var goLogin = require('../middlewares/go_login');
+var whichHome = require('../middlewares/which_home');
 const { indexCss, indexJs } = require('../helpers/home_helper');
 
-router.get('', goLogin, (req, res, next) => {
+router.get('', goLogin, whichHome, (req, res, next) => {
   // response
   var locals = {
     constants: constants,
