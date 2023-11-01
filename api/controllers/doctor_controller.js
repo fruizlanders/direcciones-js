@@ -3,6 +3,7 @@ var router = express.Router();
 var constants = require('../../config/constants')();
 const sessionFalse = require('../middlewares/session_false');
 var helpers = require('../../config/helpers');
+const Pacient = require('../models/pacient');
 const { indexCss, indexJs } = require('../helpers/doctor_helper');
 
 /* GET users listing. */
@@ -26,5 +27,31 @@ routes.forEach((route) => {
     res.render('admin/index', locals);
   });
 });
+
+router.get('/pacient/list', async (req, res, next) => {
+  const bodyPartId = req.query.body_part_id;
+  var where = {}
+  if(bodyPartId != null){
+    where = {
+      where: {
+        body_part_id: bodyPartId
+      }
+    }
+  }
+  Pacient.findAll(where)
+    .then(list => {
+      if (list) {
+        var data = {list: list, pages: 2}
+        res.send(JSON.stringify(data)).status(200);
+      } else {
+        res.send('Lista no encontrada').status(404);
+      }
+    })
+    .catch(err => {
+      console.error('Error al seleccionar los registros:', err);
+    });
+});
+
+module.exports = router;
 
 module.exports = router; 

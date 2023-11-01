@@ -9,7 +9,7 @@
   let disabledInCreate = true;
   let title = 'Pacintes Atendidos';
   let alertMessage = null;
-  let memberDataTable;
+  let pacientDataTable;
   let alertMessageProps = {};
   let inputName = '';
   let inputEmail = '';
@@ -22,7 +22,7 @@
         alertMessageProps = value.props;
       }
     });
-    await memberDataTable.getSelect({
+    await pacientDataTable.getSelect({
       rowKey: 'discipline_id', 
       respond: {
         key: 'id',
@@ -30,28 +30,28 @@
       }, 
       url: `${baseURL}admin/discipline/list`,
     });
-    memberDataTable.list();
+    pacientDataTable.list();
   });
   const search = () => {
     // run validations
-    memberDataTable.queryParams = {
+    pacientDataTable.queryParams = {
       name: inputName,
       email: inputEmail,
       code: inputCode
     };
-    memberDataTable.list();
+    pacientDataTable.list();
   }
   
   const clean = () => {
     inputName = '';
     inputEmail = '';
     inputCode = '';
-    memberDataTable.queryParams = {
+    pacientDataTable.queryParams = {
       name: inputName,
       email: inputEmail,
       code: inputCode
     };
-    memberDataTable.list();
+    pacientDataTable.list();
   };
 </script>
 
@@ -75,7 +75,7 @@
           placeholder={'Ingrese el código de miembro'} 
         />
       </div> 
-      <div class="col-md-3">
+      <div class="col-md-2">
         <InputText 
           label={'Nombre'}
           bind:value={inputName}
@@ -98,10 +98,10 @@
     </div>
     <hr>
     <div class="col-md-12">
-      <DataTable bind:this={memberDataTable} 
+      <DataTable bind:this={pacientDataTable} 
 				urlServices={{ 
-					list: `${baseURL}admin/member/list`, 
-					save: `${baseURL}admin/member/save` 
+					list: `${baseURL}doctor/pacient/list`, 
+					save: `${baseURL}doctor/pacient/save` 
 				}}
 				buttonSave={true}
 				buttonAddRow={true}
@@ -112,31 +112,27 @@
 						type: 'id',
 					},
 					code:{
-						type: 'input[text]',
+						type: 'td',
             style: 'width:100px;',
 					},
-          last_names:{
-						type: 'input[text]',
-            style: 'width:200px;',
+          dni:{
+						type: 'td',
+            style: 'width:100px;',
 					},
           names:{
-						type: 'input[text]',
-            style: 'width:150px;',
+						type: 'td',
+            style: 'width:250px;',
+					},
+          last_names:{
+						type: 'td',
+            style: 'width:250px;',
 					},
           email:{
-						type: 'input[text]',
-            style: 'width:200px;',
+						type: 'td',
+            style: 'width:250px;',
 					},
           phone:{
-						type: 'input[text]',
-            style: 'width:130px;',
-					},
-          medical_obs:{
-						type: 'input[text]',
-            style: 'width:220px;',
-					},
-          discipline_id:{
-						type: 'input[select]',
+						type: 'td',
             style: 'width:130px;',
 					},
 					actions:{
@@ -175,22 +171,19 @@
 						caption: 'Código',
 					},
 					{
-						caption: 'Apellidos ',
+						caption: 'DNI ',
 					},
           {
-						caption: 'Nombres',
+						caption: 'Apellidos',
+					},
+          {
+						caption: 'Nombre',
 					},
           {
 						caption: 'Correo',
 					},
           {
 						caption: 'Teléfono',
-					},
-          {
-						caption: 'Observaciones Médicas',
-					},
-          {
-						caption: 'Disciplina',
 					},
 					{
 						caption: 'Operaciones',
