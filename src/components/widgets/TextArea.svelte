@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 <script>
   import { onMount } from 'svelte';
-  import random from '../Helpers/random.js';
+  import random from '../../helpers/random.js';
   export let validationMessage = '';
   export let placeholder = '';
   export let value = '';
@@ -12,6 +12,7 @@
   export let rows = 3;
   export let WYSIWYG = false;
   export let height = 150;
+  export let divStyle = ''
   let frame;
   let randId;
   let validationMessageClass = '';
@@ -112,32 +113,34 @@
   }
 </script>
 
-<label for="{randId}" class="form-label {validationMessageClass}">{label}</label>
-{#if WYSIWYG}
-  <div class="btn-row {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}">
-    <button class="btn" on:click="{bold}">
-      <i class="fa fa-bold" aria-hidden="true"></i>
-    </button>
-    <button class="btn" on:click="{italic}">
-      <i class="fa fa-italic" aria-hidden="true"></i>
-    </button>
-    <button class="btn" on:click="{underline}">
-      <i class="fa fa-underline" aria-hidden="true"></i>
-    </button>
-    <button class="btn" on:click="{unorderedList}">
-      <i class="fa fa-list-ul" aria-hidden="true"></i>
-    </button>
-    <button class="btn" on:click="{orderedList}">
-      <i class="fa fa-list-ol" aria-hidden="true"></i>
-    </button>
-  </div>
-  <iframe bind:this={frame} style="height: {height}px;"  class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" id="{randId}" frameborder="0" ></iframe>
-{:else}
-  <textarea class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" rows="{rows}"  disabled={disabled} id="{randId}" placeholder="{placeholder}" bind:value={value} on:input="{validate}"></textarea>
-{/if}
-<small id="randIdHelp" class="{validationMessageClass}">
-  {validationMessage}
-</small>
+<div style="{divStyle}">
+  <label for="{randId}" class="form-label {validationMessageClass}">{label}</label>
+  {#if WYSIWYG}
+    <div class="btn-row {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}">
+      <button class="btn" on:click="{bold}">
+        <i class="fa fa-bold" aria-hidden="true"></i>
+      </button>
+      <button class="btn" on:click="{italic}">
+        <i class="fa fa-italic" aria-hidden="true"></i>
+      </button>
+      <button class="btn" on:click="{underline}">
+        <i class="fa fa-underline" aria-hidden="true"></i>
+      </button>
+      <button class="btn" on:click="{unorderedList}">
+        <i class="fa fa-list-ul" aria-hidden="true"></i>
+      </button>
+      <button class="btn" on:click="{orderedList}">
+        <i class="fa fa-list-ol" aria-hidden="true"></i>
+      </button>
+    </div>
+    <iframe bind:this={frame} style="height: {height}px; font-family: var(--bs-body-font-family);"  class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" id="{randId}" frameborder="0" ></iframe>
+  {:else}
+    <textarea class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" rows="{rows}"  disabled={disabled} id="{randId}" placeholder="{placeholder}" bind:value={value} on:input="{validate}"></textarea>
+  {/if}
+  <small id="randIdHelp" class="{validationMessageClass}">
+    {validationMessage}
+  </small>
+</div>
 
 <style>
   .btn-row{

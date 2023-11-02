@@ -11,7 +11,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/generate-image', async (req, res, next) => {
-  
   const exp = req.query.exp;
   try {
     var url = 'http://192.168.1.27:8080/image?exp=' + exp;
@@ -32,7 +31,7 @@ router.get('/generate-image', async (req, res, next) => {
             console.error('Error al guardar la imagen en el disco:', err);
             res.send('Error en escribir el archivo').status(500);
           } else {
-            res.send('pypde-images/' + randName + '.png').status(200);
+            res.send('/pypde-images/' + randName + '.png').status(200);
           }
         });
       } catch (err) {
@@ -45,7 +44,8 @@ router.get('/generate-image', async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    res.send('Ocurrión un eror en Unirest').status(500);
+    res.status(500);
+    res.send('Ocurrión un error de conexión con el servidor');
   }
 });
 

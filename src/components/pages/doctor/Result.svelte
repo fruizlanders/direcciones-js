@@ -4,6 +4,8 @@
   import { alertMessage as alertMessageStore} from '../../../stores/alertMessage.js';
   import AlertMessage from '../../widgets/AlertMessage.svelte';
   import InputText from '../../widgets/InputText.svelte';
+  import TextArea from '../../widgets/TextArea.svelte';
+  import { addService } from '../../../services/ResultService.js';
   let baseURL = BASE_URL;
   let staticURL = STATIC_URL;
   let title = 'Resultado';
@@ -14,7 +16,8 @@
   let exp = ''; let inputExp;
   let messageRandomPassword = '';
   let changePasswordPressed = false;
-  let imageUrl = '';
+  let imageUrl = '/assets/img/logo.png';
+  let disabledImageBtn = true;
   // service header data
   export let pacientId;
   export let operation;
@@ -32,6 +35,10 @@
     }
   });
 
+  if(exp != ''){
+    disabledImageBtn = false;
+  }
+
   const launchAlert = (event, message, type) => {
     alertMessage = null;
     alertMessage = AlertMessage;
@@ -43,17 +50,19 @@
   };
 
   const saveResult = () => {
-    resetPasswordMemberUser({user_id: userId}).then((resp) => {
-      launchAlert(null, 'Se envió el correo una solicitud de cambio de contraseña.', 'success');
+    var descriptionContent = inputDescripton.getWYSIWYGContent();
+    var params = {
+      pacient_id: pacientId,
+      image_url: imageUrl,
+      description: descriptionContent,
+      name: name
+    }
+    addService(params).then((resp) => {
+      console.log(resp);
+      launchAlert(null, 'Resultado agregado', 'success');
     }).catch((resp) =>  {
-      console.log(resp)
-      if(resp.status == 404){
-        launchAlert(null, 'Recurso resetar contraseña por correo no existe', 'danger');
-      }else if(resp.status == 501){ 
-        launchAlert(null, resp.data, 'danger');
-      }else { 
-        launchAlert(null, 'Ocurrió un error en resetear la contraseña del usuario', 'danger');
-      }
+      console.error(resp)
+      launchAlert(null, 'Error al agregar el resultado', 'danger');
     })
   };
 
@@ -64,15 +73,17 @@
     xhr.open('GET', url, true);
     // Set up a callback function to handle the response
     xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Request was successful
-            var responseData = xhr.responseText;
-            console.log(responseData);
-            imageUrl = STATIC_URL + responseData;
-        } else {
-            // Request failed
-            console.error('Request failed. Status code: ' + xhr.status);
-        }
+      if (xhr.status === 200) {
+        // Request was successful
+        var responseData = xhr.responseText;
+        console.log(responseData);
+        imageUrl = responseData;
+      } else {
+        // Request failed
+        console.error('Request failed. Status code: ' + xhr.status);
+        launchAlert(null, 'Recurso asosiar los trabajores a sedes no existe en el servidor', 'danger');
+        imageUrl = '/assets/img/logo.png';
+      }
     };
     // Handle network errors
     xhr.onerror = function () {
@@ -95,7 +106,7 @@
 		</div>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-5">
       <InputText 
         label={'Nombre'}
         bind:value={name}
@@ -109,50 +120,55 @@
         bind:valid={nameValid} 
         bind:this={inputName}
       />
-    </div>
-    <div class="col-md-8">
-      <InputText 
+      <TextArea 
         label={'Descripción'}
         bind:value={description}
+        divStyle={'margin-top: 10px;'}
         placeholder={'Descripción del resultado'} 
+        height={380}
         disabled={disabled}
         validations={[
-          {type:'notEmpty', message: 'Debe de ingresar un nombre usuario'},
-          {type:'maxLength', length: 200, message: 'Nombre máximo 200 letras'},
+          {type:'notEmpty', message: 'Debe de ingresar un nombre'},
+          {type:'text'},
+          {type:'maxLength', length: 50, message: 'Nombre máximo 200 letras'},
         ]}
-        bind:valid={description} 
+        WYSIWYG={true}
+        bind:valid={descriptionValid} 
         bind:this={inputDescripton}
       />
     </div>
-    <div class="col-md-1">
-      <InputText 
-        label={'Exponente'}
-        bind:value={exp}
-        placeholder={''} 
-        disabled={disabled}
-        bind:this={inputExp}
-      />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 pull-right">
-      <button class="btn btn-primary btn-actions" disabled="{disabled}" on:click="{saveResult}"><i class="fa fa-envelope-o" aria-hidden="true"></i>
-        Guardar Cambios</button>
-      <button class="btn btn-success btn-actions" disabled="{disabled}" on:click="{loadImage}"><i class="fa fa-camera-retro" aria-hidden="true"></i>
-        Generar Imagen</button>
-    </div>
-  </div> 
-  <div class="row">
-    <div class="col-md-5">
-        <img src={imageUrl} alt="Image" />
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-3">
+          <InputText 
+            label={'Exponente'}
+            bind:value={exp}
+            placeholder={''} 
+            disabled={disabled}
+            bind:this={inputExp}
+            divStyle={'width: 120px !important;'}
+          />
+        </div>
+        <div class="col-md-9">
+          <button class="btn btn-success btn-actions" disabled="{exp != '' && !isNaN(exp) ? false: disabledImageBtn}" on:click="{loadImage}"><i class="fa fa-camera-retro" aria-hidden="true"></i>
+              Generar Imagen</button>
+          <button class="btn btn-primary btn-actions" disabled="{disabled}" on:click="{saveResult}"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+              Guardar Cambios</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <img src={imageUrl} alt="Image" />
+        </div>
       </div>
     </div>
+  </div>
 </div>
 
 <style>
 .btn-actions{
-    float:right;
-    margin-top:15px;
+    float:left;
+    margin-top:30px;
     margin-left: 10px;
   }
 </style>

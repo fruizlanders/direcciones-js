@@ -10,6 +10,7 @@
   export let label = '';
   export let disabled = false;
   export let style = '';
+  export let divStyle = '';
   let randId;
   let validationMessageClass = '';
 
@@ -101,11 +102,13 @@
   };
 </script>
 
-<label for="{randId}" class="form-label {validationMessageClass}">{label}</label>
-<input type="text" class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" disabled={disabled} id="{randId}" placeholder="{placeholder}" bind:value={value} on:input="{validate}" style={style}>
-<small id="randIdHelp" class="{validationMessageClass}">
-  {validationMessage}
-</small>
+<div style={divStyle}>
+  <label for="{randId}" class="form-label {validationMessageClass}">{label}</label>
+  <input type="text" class="form-control {(validationMessageClass == 'text-danger') ? 'is-invalid' : ''}" disabled={disabled} id="{randId}" placeholder="{placeholder}" bind:value={value} on:input="{validate}" style={style}>
+  <small id="randIdHelp" class="{validationMessageClass}">
+    {validationMessage}
+  </small>
+</div>
 
 <style>
 

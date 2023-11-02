@@ -127,7 +127,7 @@ router.get('/menu', (req, res, next) => {
   var userType = req.session.type;
   var menu = {
     'pacient': [
-      {name: 'Home Paciente', url: '/admin', active: true, items: []}, 
+      {name: 'Home Paciente', url: '/pacient', active: true, items: []}, 
       {name: 'Recursos', url: '#', active: true, items: [
         {name: 'Trabajadores', url: '/worker', active: true}, 
         {name: 'Puestos de Trabajo', url: '/position', active: true}, 
@@ -140,7 +140,7 @@ router.get('/menu', (req, res, next) => {
       {name: 'S. Técnicos', url: '/admin/project', active: true, items: []}, 
     ],
     'doctor': [
-      {name: 'Home Doctor', url: '/admin', active: true, items: []}, 
+      {name: 'Home Doctor', url: '/doctor', active: true, items: []}, 
       {name: 'Recursos', url: '#', active: true, items: [
         {name: 'Trabajadores', url: '/worker', active: true}, 
         {name: 'Puestos de Trabajo', url: '/position', active: true}, 
