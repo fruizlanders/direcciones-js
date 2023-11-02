@@ -8,6 +8,7 @@
 	import '../../stylesheets/admin.css';
   import { Router, Route } from 'svelte-routing';
   import Pacient from '../pages/doctor/Pacient.svelte';
+  import Result from '../pages/doctor/Result.svelte';
   // variables
   export let url = '';
   export let basepath = '/doctor';
@@ -22,6 +23,7 @@
   <!--
     <Route path="/*" component="{Redirect404}" />
   -->
+  <Route path="/results/add/:id" let:params><Result pacientId={params.id} operation={'add'}/></Route>
 </Router>
 
 <Footer />

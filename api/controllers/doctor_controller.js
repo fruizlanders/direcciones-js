@@ -8,7 +8,7 @@ const { indexCss, indexJs } = require('../helpers/doctor_helper');
 
 /* GET users listing. */
 
-const routes = ['/', ];
+const routes = ['/', '/results/add/:id'];
 
 routes.forEach((route) => {
   router.get(route, (req, res, next) => {

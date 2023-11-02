@@ -2,6 +2,7 @@
 
 CREATE TABLE results (
   id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(100),
   description	TEXT,
   created_at DATETIME,
   updated_at DATETIME,

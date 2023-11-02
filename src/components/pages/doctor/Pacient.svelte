@@ -138,29 +138,19 @@
 					actions:{
 						type: 'actions',
 						buttons: [
-              {
+               {
 								type: 'link', 
-								icon: 'fa fa-bullseye', 
+								icon: 'fa fa-list', 
 								style:'font-size:12px; margin-right:1px;',
-								url: '/admin/member/objective/',
+								url: '/doctor/results/show/',
                 key: 'id',
 							},
               {
 								type: 'link', 
-								icon: 'fa fa-user', 
+								icon: 'fa fa-plus', 
 								style:'font-size:12px; margin-right:1px;',
-								url: '/admin/member/user/',
+								url: '/doctor/results/add/',
                 key: 'id',
-							},
-              {
-								type: 'link', 
-								icon: 'fa fa-bookmark', 
-								style:'font-size:12px; margin-right:7px;',
-								url: '/admin/member/membership/',
-                key: 'id',
-							},
-							{
-								type: 'delete',
 							},
 						],
 						style: 'text-align:center;'
@@ -186,7 +176,7 @@
 						caption: 'Teléfono',
 					},
 					{
-						caption: 'Operaciones',
+						caption: 'Resultados',
 						style:'text-align: center;',
 					},]}
         messages={{

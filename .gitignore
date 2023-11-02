@@ -18,5 +18,6 @@ dist
 .~lock*
 public/uploads
 public/templates
+public/pypde-images
 tmp
 public/build
