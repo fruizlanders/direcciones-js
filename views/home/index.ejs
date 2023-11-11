@@ -1,1 +1,79 @@
-<h1>hola mundo</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Algoritmo Mejorado - Repartidor Orientado a Tiendas</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link href="/style.css" rel="stylesheet" type="text/css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC-uxc2piNpBeFNv34gTP-pNvRw_ggqQg&callback=initMap&libraries=places"></script>
+
+  <script>
+    let map, directionsService, directionsRenderer;
+    const coords = { lng: -77.032111, lat: -12.086065 };
+    const markers = [];
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: coords,
+        zoom: 14,
+      });
+
+      google.maps.event.addListener(map, "click", function (event) {
+        this.setOptions({ scrollwheel: true });
+      });
+
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+    }
+    
+  </script>
+
+</head>
+
+<body onload="initMap()">
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row bg-primary text-white py-3">
+        <div class="col text-center">
+          <h1 class="display-4">Repartidor Orientado a Tiendas</h1>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <label for="lugares">Selecciona un grupo de destinos:</label>
+          <select id="lugares">
+              <option value="li1">Lince 1</option>
+              <option value="li2">Lince 2</option>
+              <option value="si1">San Isidro 1</option>
+              <option value="si2">San Isidro 2</option>
+              <option value="loca1">Distancia 1</option>
+              <option value="loca2">Distancia 2</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <span class="button-text">Asignar arreglo de destinos a variable</span>
+          <div class="col-12">
+            <button class="btn btn-primary mr-2" onclick="cargarLugares()">Mostrar lugares</button><br>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary mr-2" onclick="googleLoop()">Ejecutar</button><br>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div id="map" style="height: 400px; width: 100%;"></div>
+        </div>
+      </div>
+      <div id="myDiv1"></div><br>
+      <div id="myDiv2"></div><br>
+      <div id="myDiv3"></div><br>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+
+</html>
